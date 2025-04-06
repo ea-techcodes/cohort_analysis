@@ -1,8 +1,8 @@
 /*
-This query calculates the retention rates for 1, 2, and 3 months based on the time between first and second purchases.
+Retention Rates calculation for 1, 2, and 3 months based on the time purchases.
 */
 
-WITH months AS (           -- Grouping customers by the month of their first and second purchases using cohort_analysis table
+WITH months AS (
   SELECT
     customer_id
     ,DATE(DATE_TRUNC('MONTH', first_purchase)) AS first_month
@@ -11,7 +11,7 @@ WITH months AS (           -- Grouping customers by the month of their first and
     cohort_analysis
 ),
 
-tt AS (                    -- Calculated the number of months between first and second purchases
+tt AS (      
   SELECT
     customer_id
     ,first_month AS month_group
@@ -20,7 +20,6 @@ tt AS (                    -- Calculated the number of months between first and 
     months
 )
 
--- Final selection calculates the retention rates for 1, 2, and 3 months based on the time between the first and second purchases using CASE statements.
 SELECT
   month_group
   ,COUNT(DISTINCT customer_id) AS total_customers
